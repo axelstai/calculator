@@ -1,19 +1,23 @@
 //select all btns and the screen
-let btns = document.querySelectorAll(".buttons");
+let num = document.querySelectorAll(".numbers");
+let operators = document.querySelectorAll(".top, .multiply, .deduct, .add, .comma, .equals");
 let screen = document.querySelector(".screen");
+console.log(operators);
 
 //save clicked values and count clicks
 let clicked = [];
 let clicks = 0;
 
-//add eventlistener to all buttons
-btns.forEach(function (elem) {
+//add eventlistener to all numbers and display them on the screen
+num.forEach(function (elem) {
     elem.addEventListener("click", function () {
-        console.log(elem);
         clicked.push(elem.value);
-        console.log(clicked);
+        screen.innerText += elem.value;
     })
 })
+
+//
+
 
 
 
