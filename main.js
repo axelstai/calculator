@@ -9,14 +9,29 @@ let clicked = [];
 let clicks = 0;
 
 //add eventlistener to all numbers and display them on the screen
-num.forEach(function (elem) {
-    elem.addEventListener("click", function () {
-        clicked.push(elem.value);
-        screen.innerText += elem.value;
+function displayNumbers(nr) {
+    nr.addEventListener("click", function () {
+        clicked.push(nr.value);
+        screen.innerText += nr.value;
     })
+}
+num.forEach(function (elem) {
+    displayNumbers(elem);
 })
 
-//
+//reset everything when pushing "C"
+let c = operators[0];
+c.addEventListener("click", reset);
+
+function reset() {
+    screen.innerText = null;
+    clicked = [];
+    console.log(clicked);
+}
+
+
+
+
 
 
 
