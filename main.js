@@ -1,12 +1,13 @@
 //select all btns and the screen
 let num = document.querySelectorAll(".numbers");
-let operators = document.querySelectorAll(".top, .multiply, .deduct, .add, .comma, .equals");
+let operatorBtn = document.querySelectorAll(".top, .multiply, .deduct, .add, .comma, .equals");
 let screen = document.querySelector(".screen");
-console.log(operators);
+console.log(operatorBtn);
 
-//save clicked values and count clicks
+//store current nr typed(clicked), all numbers in the expression(numbers) and operators.
 let clicked = [];
-let clicks = 0;
+let numbers = [];
+let operators = [];
 
 //add eventlistener to all numbers and display them on the screen
 function displayNumbers(nr) {
@@ -20,25 +21,54 @@ num.forEach(function (elem) {
 })
 
 //reset everything when pushing "C"
-let c = operators[0];
+let c = operatorBtn[0];
 c.addEventListener("click", reset);
 
 function reset() {
     screen.innerText = null;
     clicked = [];
-    console.log(clicked);
+    numbers = [];
+    operators = [];
 }
 
+//make the array with induvidual numbers into actual numbers: [2,4,5] --> 245
+let equals = operatorBtn[8];
+equals.addEventListener("click", formatNumbers);
+equals.addEventListener("click", function () {
+    screen.innerText = (operate(numbers[0], operators[0], numbers[1]));
+
+})
+
+
+//formates clicked to int and stores the int in an array(numbers)
+function formatNumbers() {
+    clicked = Number(clicked.join(""));
+    numbers.push(clicked);
+    clicked = [];
+}
+//plusse
+let plus = operatorBtn[6];
+plus.addEventListener("click", formatNumbers)
+plus.addEventListener("click", function () {
+    operators.push("+");
+    screen.innerText += "+";
+})
 
 
 
 
 
-
+//----------------------------------------\\
 
 
 
 //functions for adding, subtracting, multiplying and dividing 
+function operate(a, op, b) {
+    if (op == "+") {
+        return add(a, b);
+    }
+}
+
 function add(a, b) {
     return a + b;
 }
@@ -55,9 +85,6 @@ function divide(a, b) {
     return a / b;
 }
 
-function operate(operator, a, b) {
-
-}
 
 
 
