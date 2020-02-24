@@ -8,6 +8,7 @@ console.log(operatorBtn);
 let clicked = [];
 let numbers = [];
 let operators = [];
+let value = 0;
 
 //add eventlistener to all numbers and display them on the screen
 function displayNumbers(nr) {
@@ -29,13 +30,22 @@ function reset() {
     clicked = [];
     numbers = [];
     operators = [];
+    value = 0;
 }
 
 //make the array with induvidual numbers into actual numbers: [2,4,5] --> 245
 let equals = operatorBtn[8];
 equals.addEventListener("click", formatNumbers);
 equals.addEventListener("click", function () {
-    screen.innerText = (operate(numbers[0], operators[0], numbers[1]));
+    value = (operate(numbers[0], operators[0], numbers[1]))
+    if (operators.length > 1) {
+        for (i = 1; i < operators.length; i++) {
+            let sum = value;
+            value = (operate(sum, operators[i], numbers[i + 1]));
+            console.log(sum);
+        }
+    }
+    screen.innerText = value;
 
 })
 
@@ -66,6 +76,9 @@ plus.addEventListener("click", function () {
 function operate(a, op, b) {
     if (op == "+") {
         return add(a, b);
+    }
+    else if (op == "x") {
+
     }
 }
 
