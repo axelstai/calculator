@@ -8,7 +8,6 @@ console.log(operatorBtn);
 let clicked = [];
 let numbers = [];
 let operators = [];
-let value = 0;
 
 //add eventlistener to all numbers and display them on the screen
 function displayNumbers(nr) {
@@ -30,42 +29,93 @@ function reset() {
     clicked = [];
     numbers = [];
     operators = [];
-    value = 0;
 }
 
-//make the array with induvidual numbers into actual numbers: [2,4,5] --> 245
+
+//get result
 let equals = operatorBtn[8];
 equals.addEventListener("click", formatNumbers);
 equals.addEventListener("click", function () {
-    value = (operate(numbers[0], operators[0], numbers[1]))
-    if (operators.length > 1) {
-        for (i = 1; i < operators.length; i++) {
-            let sum = value;
-            value = (operate(sum, operators[i], numbers[i + 1]));
-            console.log(sum);
+    while (numbers.length > 1) {
+        if (operators.includes("x")) {
+            let i = operators.indexOf("x")
+            let product = operate(numbers[i], operators[i], numbers[i + 1]);
+            numbers.splice(i, 2, product);
+            operators.splice(i, 1)
+            console.log(numbers);
+            console.log(operators)
+        }
+        if (operators.includes("/")) {
+            let i = operators.indexOf("/");
+            let product = operate(numbers[i], operators[i], numbers[i + 1]);
+            if (numbers[i] && numbers[i + 1] != 0) {
+                numbers.splice(i, 2, product);
+                operators.splice(i, 1)
+                console.log(numbers);
+                console.log(operators)
+            } else {
+                screen.innerText = "Impossible!"
+                setTimeout(reset, 2000);
+            }
+        }
+        else if (operators.includes("+")) {
+            let i = operators.indexOf("+")
+            let product = operate(numbers[i], operators[i], numbers[i + 1]);
+            numbers.splice(i, 2, product);
+            operators.splice(i, 1)
+            console.log(numbers);
+            console.log(operators)
+        }
+        else if (operators.includes("-")) {
+            let i = operators.indexOf("-")
+            let product = operate(numbers[i], operators[i], numbers[i + 1]);
+            numbers.splice(i, 2, product);
+            operators.splice(i, 1)
+            console.log(numbers);
+            console.log(operators)
         }
     }
-    screen.innerText = value;
-
+    screen.innerText = Math.round(numbers * 100) / 100;
 })
 
 
-//formates clicked to int and stores the int in an array(numbers)
+//formates clicked numbers to int and stores the int in an array(numbers)
 function formatNumbers() {
     clicked = Number(clicked.join(""));
     numbers.push(clicked);
     clicked = [];
 }
-//plusse
+//add
 let plus = operatorBtn[6];
-plus.addEventListener("click", formatNumbers)
+plus.addEventListener("click", formatNumbers);
 plus.addEventListener("click", function () {
     operators.push("+");
     screen.innerText += "+";
 })
 
+//multiply
+let mult = operatorBtn[4];
+mult.addEventListener("click", formatNumbers);
+mult.addEventListener("click", function () {
+    operators.push("x");
+    screen.innerText += "x";
+})
 
+//divide
+let divi = operatorBtn[3];
+divi.addEventListener("click", formatNumbers);
+divi.addEventListener("click", function () {
+    operators.push("/");
+    screen.innerText += "/";
+})
 
+//subtract
+let sub = operatorBtn[5];
+sub.addEventListener("click", formatNumbers);
+sub.addEventListener("click", function () {
+    operators.push("-");
+    screen.innerText += "-";
+})
 
 
 //----------------------------------------\\
@@ -78,7 +128,13 @@ function operate(a, op, b) {
         return add(a, b);
     }
     else if (op == "x") {
-
+        return multiply(a, b);
+    }
+    else if (op == "/") {
+        return divide(a, b);
+    }
+    else if (op == "-") {
+        return subtract(a, b)
     }
 }
 
