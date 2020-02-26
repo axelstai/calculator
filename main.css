@@ -36,11 +36,14 @@ body {
 
 .screen {
     grid-column: 1/5;
-    color: white;
-    background-color: rgb(87, 85, 83); ;
-    padding: 5px;
+    color: rgb(235, 227, 221);
+    background-color: rgb(87, 85, 83);
+    font-size:30px;
+    padding: 10px;
     font-size: 1.5em;
-    min-height: 38px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
 }
 
 .null {
@@ -48,6 +51,6 @@ body {
 }
 
 .multiply, .deduct, .add, .equals, .divide {
-    background-color: rgb(252, 161, 16);
+    background-color: rgb(50, 163, 255)
 
 }

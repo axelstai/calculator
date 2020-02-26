@@ -117,6 +117,15 @@ sub.addEventListener("click", function () {
     screen.innerText += "-";
 })
 
+//comma
+let comma = operatorBtn[7];
+comma.addEventListener("click", function () {
+    clicked.push(comma.value);
+    screen.innerText += comma.value;
+
+})
+
+
 
 //----------------------------------------\\
 
