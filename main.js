@@ -16,6 +16,7 @@ function displayNumbers(nr) {
         screen.innerText += nr.value;
     })
 }
+
 num.forEach(function (elem) {
     displayNumbers(elem);
 })
@@ -37,13 +38,13 @@ let equals = operatorBtn[8];
 equals.addEventListener("click", formatNumbers);
 equals.addEventListener("click", function () {
     while (numbers.length > 1) {
+        console.log("x")
         if (operators.includes("x")) {
             let i = operators.indexOf("x")
             let product = operate(numbers[i], operators[i], numbers[i + 1]);
             numbers.splice(i, 2, product);
             operators.splice(i, 1)
-            console.log(numbers);
-            console.log(operators)
+
         }
         if (operators.includes("/")) {
             let i = operators.indexOf("/");
@@ -51,8 +52,7 @@ equals.addEventListener("click", function () {
             if (numbers[i] && numbers[i + 1] != 0) {
                 numbers.splice(i, 2, product);
                 operators.splice(i, 1)
-                console.log(numbers);
-                console.log(operators)
+
             } else {
                 screen.innerText = "Impossible!"
                 setTimeout(reset, 2000);
@@ -63,28 +63,31 @@ equals.addEventListener("click", function () {
             let product = operate(numbers[i], operators[i], numbers[i + 1]);
             numbers.splice(i, 2, product);
             operators.splice(i, 1)
-            console.log(numbers);
-            console.log(operators)
+
         }
         else if (operators.includes("-")) {
             let i = operators.indexOf("-")
             let product = operate(numbers[i], operators[i], numbers[i + 1]);
             numbers.splice(i, 2, product);
             operators.splice(i, 1)
-            console.log(numbers);
-            console.log(operators)
+
         }
     }
     screen.innerText = Math.round(numbers * 100) / 100;
+    console.log("numbers:", numbers);
 })
 
 
 //formates clicked numbers to int and stores the int in an array(numbers)
 function formatNumbers() {
-    clicked = Number(clicked.join(""));
-    numbers.push(clicked);
-    clicked = [];
+    //checks if any numbers are clicked:
+    if (clicked.length > 0) {
+        clicked = Number(clicked.join(""));
+        numbers.push(clicked);
+        clicked = [];
+    }
 }
+
 //add
 let plus = operatorBtn[6];
 plus.addEventListener("click", formatNumbers);
@@ -125,7 +128,21 @@ comma.addEventListener("click", function () {
 
 })
 
+//%
+let pros = operatorBtn[2];
+pros.addEventListener("click", function () {
+    if (numbers.length == 1) {
+        numbers = [numbers / 100];
+        screen.innerText = numbers;
+        console.log(numbers);
+    } else if (clicked.length != 0) {
+        formatNumbers();
+        numbers = [numbers / 100];
+        screen.innerText = numbers;
+        console.log(numbers);
+    }
 
+})
 
 //----------------------------------------\\
 
