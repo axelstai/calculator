@@ -38,7 +38,6 @@ let equals = operatorBtn[8];
 equals.addEventListener("click", formatNumbers);
 equals.addEventListener("click", function () {
     while (numbers.length > 1) {
-        console.log("x")
         if (operators.includes("x")) {
             let i = operators.indexOf("x")
             let product = operate(numbers[i], operators[i], numbers[i + 1]);
@@ -54,7 +53,8 @@ equals.addEventListener("click", function () {
                 operators.splice(i, 1)
 
             } else {
-                screen.innerText = "Impossible!"
+                screen.innerText = "Can not divide by 0"
+                numbers = [];
                 setTimeout(reset, 2000);
             }
         }
@@ -73,8 +73,9 @@ equals.addEventListener("click", function () {
 
         }
     }
-    screen.innerText = Math.round(numbers * 100) / 100;
-    console.log("numbers:", numbers);
+    if (typeof numbers[0] == "number") {
+        screen.innerText = Math.round(numbers * 100) / 100;
+    }
 })
 
 
