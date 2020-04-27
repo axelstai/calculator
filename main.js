@@ -9,17 +9,47 @@ let clicked = [];
 let numbers = [];
 let operators = [];
 
+const validNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+const validOperators = ["+", "-", "/", "x"]
+
 //add eventlistener to all numbers and display them on the screen
 function displayNumbers(nr) {
     nr.addEventListener("click", function () {
         clicked.push(nr.value);
         screen.innerText += nr.value;
     })
+
 }
 
 num.forEach(function (elem) {
     displayNumbers(elem);
 })
+
+
+
+//type by pressing keys
+document.addEventListener("keydown", getValue)
+
+function getValue(e) {
+    if (validNumbers.includes(e.key)) {
+        clicked.push(e.key);
+        screen.innerText += e.key;
+
+
+    }
+    else if (validOperators.includes(e.key)) {
+        operators.push(e.key);
+        screen.innerText += e.key;
+        formatNumbers();
+
+    }
+    else if (e.key == "Enter") {
+        formatNumbers();
+        getResult();
+
+    }
+}
+
 
 //reset everything when pushing "C"
 let c = operatorBtn[0];
@@ -33,11 +63,15 @@ function reset() {
 }
 
 
-//get result
+//get result when clicking "="
 let equals = operatorBtn[8];
 equals.addEventListener("click", formatNumbers);
-equals.addEventListener("click", function () {
+equals.addEventListener("click", getResult);
+
+
+function getResult() {
     while (numbers.length > 1) {
+
         if (operators.includes("x")) {
             let i = operators.indexOf("x")
             let product = operate(numbers[i], operators[i], numbers[i + 1]);
@@ -53,7 +87,7 @@ equals.addEventListener("click", function () {
                 operators.splice(i, 1)
 
             } else {
-                screen.innerText = "Can not divide by 0"
+                screen.innerText = "infinite"
                 numbers = [];
                 setTimeout(reset, 2000);
             }
@@ -75,19 +109,27 @@ equals.addEventListener("click", function () {
     }
     if (typeof numbers[0] == "number") {
         screen.innerText = Math.round(numbers * 100) / 100;
+
     }
-})
+
+}
 
 
 //formates clicked numbers to int and stores the int in an array(numbers)
 function formatNumbers() {
+    //remove last operator if there are too many operators
+    if (operators.length < numbers.length) {
+        operators.pop()
+    }
     //checks if any numbers are clicked:
-    if (clicked.length > 0) {
+    else if (clicked.length > 0) {
         clicked = Number(clicked.join(""));
         numbers.push(clicked);
         clicked = [];
     }
 }
+
+// Functions for different operators:
 
 //add
 let plus = operatorBtn[6];
@@ -145,41 +187,25 @@ pros.addEventListener("click", function () {
 
 })
 
-//----------------------------------------\\
 
 
 
-//functions for adding, subtracting, multiplying and dividing 
+//function for operations 
 function operate(a, op, b) {
     if (op == "+") {
-        return add(a, b);
+        return a + b;
     }
     else if (op == "x") {
-        return multiply(a, b);
+        return a * b;
     }
     else if (op == "/") {
-        return divide(a, b);
+        return a / b;
     }
     else if (op == "-") {
-        return subtract(a, b)
+        return a - b;
     }
 }
 
-function add(a, b) {
-    return a + b;
-}
-
-function subtract(a, b) {
-    return a - b;
-}
-
-function multiply(a, b) {
-    return a * b;
-}
-
-function divide(a, b) {
-    return a / b;
-}
 
 
 
